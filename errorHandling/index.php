@@ -10,9 +10,14 @@ spl_autoload_register(function ($class) {
 
 use App\Invoice;
 use App\Customer;
+use App\Exceptions\InvoiceException;
 
 
 $customer = new Customer();
 $invoice = new Invoice($customer);
 
-$invoice->process(225);
+try {
+    $invoice->process(-225);
+} catch (InvoiceException $e) {
+    echo "{$e->getMessage()}, {$e->getFile()}:{$e->getLine()}\n";
+}
